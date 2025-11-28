@@ -1,0 +1,105 @@
+
+        :root {
+            --primary: #1A73E8; 
+            --accent: #34A853;  
+            --bg-light: #F4F6F8;
+            --bg-dark: #121212;
+            --text-color-dark: #1f2937; 
+            --text-color-light: #E5E7EB; 
+            --card-light: white;
+            --card-dark: #1f2937;
+            --input-dark: #374151;
+            --border-dark: #4B5563;
+        }
+
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        .light-mode {
+            background-color: var(--bg-light);
+            color: var(--text-color-dark); 
+        }
+
+        .dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-color-light); 
+        }
+
+        .card {
+            background-color: var(--card-light);
+            color: var(--accent); 
+        }
+        
+        .dark-mode .card {
+            background-color: var(--card-dark); 
+            color: var(--text-color-light); 
+        }
+
+        .dark-mode input,
+        .dark-mode select {
+            background-color: var(--input-dark);
+            color: var(--text-color-light);
+            border-color: var(--border-dark);
+        }
+
+        .dark-mode .border-dashed {
+            border-color: var(--border-dark) !important;
+        }
+
+        
+        .bg-primary-action { background-color: var(--primary); }
+        .text-primary-action { color: var(--primary); }
+        .focus\:ring-primary:focus { --tw-ring-color: var(--primary); }
+        .focus\:border-primary:focus { border-color: var(--primary); }
+        
+        .text-accent-status { color: var(--accent); } 
+
+
+        
+        @keyframes rotate-swap {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .animate-swap {
+            animation: rotate-swap 0.5s ease-in-out;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+       
+
+        #app-container {
+            max-width: 1000px;
+        }
+
+        #main-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        #historical-widget {
+            margin-top: 0; 
+        }
+
+       
+
+        @media (min-width: 768px) {
+            #main-layout {
+                flex-direction: row;
+            }
+
+            #conversion-card {
+                flex: 1;
+            }
+
+            #historical-widget {
+                flex: 1;
+            }
+        }

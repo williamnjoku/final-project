@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoCurrency | Live Converter</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-inter light-mode transition-colors duration-300 min-h-screen p-4 sm:p-8">
+
+    <div id="app-container" class="mx-auto">
+        
+        <header class="flex justify-between items-center py-4 mb-6">
+            <h1 class="font-poppins text-3xl font-bold text-primary-action transition-colors">GoCurrency</h1>
+            <div class="flex items-center space-x-3">
+                <span id="user-display" class="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[80px] sm:max-w-none">...</span>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <svg id="theme-icon" class="w-6 h-6 text-yellow-500 dark:text-gray-300 transition-colors" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+                </button>
+            </div>
+        </header>
+
+       
+        <div id="loading-indicator" class="flex justify-center items-center py-8">
+            <svg class="w-8 h-8 text-primary-action loading-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 0014 4m-3 7H4"></path>
+            </svg>
+            <span class="ml-3 text-lg font-medium text-gray-600 dark:text-gray-300">Loading Rates and Database...</span>
+        </div>
+
+        <div id="app-alert" class="mt-4 mb-4 hidden p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg dark:bg-red-900 dark:text-red-300"></div>
+
+
+      
+        <div id="main-layout" class="hidden">
+            
+            <div id="conversion-card" class="card p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="font-poppins text-xl font-semibold mb-6">Conversion Panel</h2>
+                
+                <div class="mb-4">
+                    <label for="from-amount" class="block text-sm font-medium mb-1">Amount</label>
+                    <input type="number" id="from-amount" value="1.00" min="0" step="0.01" class="w-full p-3 border rounded-lg text-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors dark:bg-gray-700" placeholder="Enter amount">
+                </div>
+
+                <div class="flex items-start space-x-2 sm:space-x-4 mb-6">
+                    
+                    <div class="flex-1 min-w-0">
+                        <label for="from-currency" class="block text-sm font-medium mb-1">From</label>
+                        <select id="from-currency" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors dark:bg-gray-700"></select>
+                    </div>
+                    
+                    <div class="flex items-end justify-center pt-7 sm:pt-5">
+                        <button id="switch-currency" class="p-3 bg-primary-action text-white rounded-full shadow-md hover:opacity-90 transition-all duration-300">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m12 0l4 4m-4-4l4-4"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <label for="to-currency" class="block text-sm font-medium mb-1">To</label>
+                        <select id="to-currency" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors dark:bg-gray-700"></select>
+                    </div>
+                </div>
+
+                <div id="conversion-result" class="text-center p-4 sm:p-6 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800">
+                    <p id="rate-display" class="text-sm text-gray-500 dark:text-gray-400">Rate will display here.</p>
+                    <p id="total-display" class="font-poppins text-4xl sm:text-5xl font-extrabold mt-1 text-primary-action transition-colors">0.00</p>
+                    <p id="cached-status" class="text-xs text-red-500 mt-1 hidden">Rates from cache. Offline mode active.</p>
+                </div>
+            </div>
+
+            <div id="historical-widget" class="space-y-6">
+                
+                <div class="card p-6 rounded-xl shadow-lg border border-gray-200">
+                    <h3 class="font-poppins text-xl font-semibold mb-4">Historical Exchange Rates</h3>
+                    <div class="flex space-x-2 mb-4">
+                        <button class="px-4 py-2 bg-primary-action text-white text-sm font-medium rounded-full hover:opacity-90 transition-opacity">7-DAY</button>
+                        <button class="px-4 py-2 bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 text-sm font-medium rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">30-DAY</button>
+                    </div>
+                    <div id="historical-rates" class="text-sm">
+                        <p class="text-gray-500 dark:text-gray-400">Select currencies and convert to see the historical trend.</p>
+                    </div>
+                </div>
+
+                <!-- <div class="card p-6 rounded-xl shadow-lg border border-gray-200">
+                    <h3 class="font-poppins text-xl font-semibold mb-4">My Favorite Pairs</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex justify-between items-center text-gray-700 dark:text-gray-200">
+                            USD to JPY
+                            <span class="text-yellow-500 cursor-pointer hover:opacity-75">☆</span>
+                        </li>
+                        <li class="flex justify-between items-center text-gray-700 dark:text-gray-200">
+                            EUR to CAD
+                            <span class="text-yellow-500 cursor-pointer hover:opacity-75">☆</span>
+                        </li>
+                        <li class="flex justify-between items-center text-gray-700 dark:text-gray-200">
+                            GBP to CAD
+                            <span class="text-yellow-500 cursor-pointer hover:opacity-75">☆</span>
+                        </li>
+                        <li class="flex justify-between items-center text-gray-700 dark:text-gray-200">
+                            GBP to USD
+                            <span class="text-yellow-500 cursor-pointer hover:opacity-75">☆</span>
+                        </li>
+                    </ul>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">Favorites are stored in your private database.</p>
+                </div> -->
+
+            </div>
+
+        </div>
+        
+    </div>
+
+
+
+    <script type="module" src="scripts/app.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js" type="module"></script>
+</body>
+</html>
