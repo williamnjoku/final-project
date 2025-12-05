@@ -88,8 +88,6 @@
             margin-top: 0; 
         }
 
-       
-
         @media (min-width: 768px) {
             #main-layout {
                 flex-direction: row;
